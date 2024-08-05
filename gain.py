@@ -173,7 +173,7 @@ def gain (data_x, gain_parameters):
     _, G_loss_curr, MSE_loss_curr = \
     sess.run([G_solver, G_loss_temp, MSE_loss],
              feed_dict = {X: X_mb, M: M_mb, H: H_mb})
-            
+
   ## Return imputed data      
   Z_mb = uniform_sampler(0, 0.01, no, dim) 
   M_mb = data_m
@@ -190,4 +190,4 @@ def gain (data_x, gain_parameters):
   # Rounding
   imputed_data = rounding(imputed_data, data_x)  
           
-  return imputed_data
+  return imputed_data, MSE_loss_curr
