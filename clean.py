@@ -13,7 +13,7 @@ df = pd.read_csv('data/adjusted/imputed.csv',
                         'AGE_AT_DIAGNOSIS_NUM', 'REGIONAL_NODES_EXAMINED',
                         'REGIONAL_NODES_POSITIVE', 'SURVIVAL_TIME_IN_MONTHS',
                         'PreTreatment_Smoke_Status', 'Tumor_size', 'Quit_Status_Any_time',
-                        'CRA_SMOKE_AGE', 'CRA_SMOKE_TOTALYRS', 'Quit_FU'])
+                        'CRA_SMOKE_AGE', 'CRA_SMOKE_TOTALYRS'])
 df = df.astype('int64')
 
 df.to_csv('data/adjusted/imputed.csv', index=False)
