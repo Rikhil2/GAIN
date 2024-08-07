@@ -84,14 +84,14 @@ clean('X_test')
 X_train = pd.read_csv('data/adjusted/X_trainimputed.csv')
 X_test = pd.read_csv('data/adjusted/X_testimputed.csv')
 
-eta = np.arange(0, 1.1, 0.1)
+eta = np.arange(0.3, 0.8, 0.1)
 gamma = [0, 0.5, 1, 10, 100, 1000]
-max_depth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-min_child_weight = [0.001, 0.01, 0.1, 1, 10, 100, 1000]
-max_delta_step = np.arange(0, 11, 1)
-subsample = np.arange(0.5, 1.1, 0.1)
-reg_lambda = [0.01, 0.1, 1, 10, 100]
-alpha = [0, 0.1, 1, 5, 10, 100]
+max_depth = [4, 5, 6, 7, 8]
+min_child_weight = [0.1, 1, 10]
+max_delta_step = np.arange(5, 8, 1)
+subsample = np.arange(0.5, 0.8, 0.1)
+reg_lambda = [0.1, 1, 10]
+alpha = [0.1, 1, 10]
 
 classifier = XGBClassifier()  # eta=0.3, gamma=0, max_depth=6, min_child_weight=1, max_delta_step=0, subsample=1, reg_lambda=1, alpha=0, scale_pos_weight=1
 
@@ -117,4 +117,4 @@ clf.fit(X_train, y_train)
 
 preds = clf.predict(X_test)
 
-print(accuracy_score(y_test, preds))#64.93%
+print(accuracy_score(y_test, preds))#
