@@ -236,8 +236,8 @@ pipe = Pipeline([
     ("classifier", TabNetClassifier(**best_params))
 ])
 
-pipe.fit(X_train_val.values, y_train_val.values)
-predictions = pipe.predict(X_test.values)
+pipe.fit(X_train_val, y_train_val)
+predictions = pipe.predict(X_test)
 print(y_test.value_counts())
 print(accuracy_score(y_test, predictions))
 print(roc_auc_score(y_test, predictions))
