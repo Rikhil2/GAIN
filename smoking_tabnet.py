@@ -230,7 +230,7 @@ best_params['n_shared'] = int(best_params['n_shared'])
 print("Best set of parameters: {}".format(best_params))
 
 pipe = Pipeline([
-    ("imputer", CustomImputer()),
+    ("imputer", CustomImputer(gain_parameters)),
     ("scaler", StandardScaler()),
     ("poly", PolynomialFeatures(degree=2)),
     ("classifier", TabNetClassifier(**best_params))
