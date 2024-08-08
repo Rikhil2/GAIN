@@ -96,7 +96,8 @@ def train_imputer(X_train, gain_parameters):
         X_mb = M_mb * X_mb + (1 - M_mb) * Z_mb
 
         _, D_loss_curr = sess.run([D_solver, D_loss_temp], feed_dict={M: M_mb, X: X_mb, H: H_mb})
-        _, G_loss_curr, MSE_loss_curr = sess.run([G_solver, G_loss_temp, MSE_loss], feed_dict={X: X_mb, M: M_mb, H: H_mb})
+        _, G_loss_curr, MSE_loss_curr = sess.run([G_solver, G_loss_temp, MSE_loss],
+                                                 feed_dict={X: X_mb, M: M_mb, H: H_mb})
 
         if MSE_loss_curr < best_loss:
             best_loss = MSE_loss_curr
@@ -125,6 +126,7 @@ def train_imputer(X_train, gain_parameters):
     X_train = pd.DataFrame(imputed_data, columns=X_test.columns)
     return sess, G_sample, X, M, norm_parameters, X_train
 
+
 def impute_test_data(sess, G_sample, X, M, norm_parameters, X_test):
     miss_data_x = X_test.to_numpy()
     data_m = 1 - np.isnan(miss_data_x)
@@ -143,6 +145,7 @@ def impute_test_data(sess, G_sample, X, M, norm_parameters, X_test):
     imputed_data = rounding(imputed_data, miss_data_x)
 
     return pd.DataFrame(imputed_data, columns=X_test.columns)
+
 
 # Usage
 df = pd.read_csv('data/converted.csv')
