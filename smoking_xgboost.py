@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import numpy as np
 import pandas as pd
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, roc_auc_score
 from xgboost import XGBClassifier
 from sklearn.model_selection import GridSearchCV
 
@@ -50,7 +50,6 @@ def clean(data_name):
     data.to_csv('data/adjusted/' + data_name + 'imputed.csv', index=False)
 
 
-# if __name__ == '__main__':
 batch_size = 128
 hint_rate = 0.9
 alpha = 1e4
@@ -84,26 +83,19 @@ clean('X_test')
 X_train = pd.read_csv('data/adjusted/X_trainimputed.csv')
 X_test = pd.read_csv('data/adjusted/X_testimputed.csv')
 
-eta = np.arange(0.3, 0.8, 0.1)
-gamma = [0, 0.5, 1, 10, 100, 1000]
-max_depth = [4, 5, 6, 7, 8]
-min_child_weight = [0.1, 1, 10]
-max_delta_step = np.arange(5, 8, 1)
-subsample = np.arange(0.5, 0.8, 0.1)
-reg_lambda = [0.1, 1, 10]
-alpha = [0.1, 1, 10]
+alpha = [3, 4]
+gamma = [11, 12, 13]
+reg_lambda = [3, 4]
+learning_rate = [0.13, 0.14]
 
-classifier = XGBClassifier()  # eta=0.3, gamma=0, max_depth=6, min_child_weight=1, max_delta_step=0, subsample=1, reg_lambda=1, alpha=0, scale_pos_weight=1
+classifier = XGBClassifier()
 
 classifier_gscv = GridSearchCV(
     estimator=classifier,
     param_grid={
-        'eta': eta,
+        'learning_rate': learning_rate,
         'gamma': gamma,
-        'min_child_weight': min_child_weight,
-        'max_delta_step': max_delta_step,
-        'subsample': subsample,
-        'reg_lambda': reg_lambda,
+        'lambda': reg_lambda,
         'alpha': alpha
     },
     scoring='accuracy',
@@ -111,10 +103,14 @@ classifier_gscv = GridSearchCV(
 )
 
 classifier_gscv.fit(X_train, y_train)
-clf = XGBClassifier(classifier_gscv.best_params_)
+print(classifier_gscv.best_params_)
+
+# Create a new classifier instance with the best parameters
+clf = XGBClassifier(**classifier_gscv.best_params_)
 
 clf.fit(X_train, y_train)
 
 preds = clf.predict(X_test)
 
-print(accuracy_score(y_test, preds))#
+print(accuracy_score(y_test, preds))
+print(roc_auc_score(y_test, preds))
