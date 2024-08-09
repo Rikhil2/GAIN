@@ -221,7 +221,7 @@ def objective(params):
 
 trials = Trials()
 
-best_params = fmin(objective, space, algo=tpe.suggest, max_evals=10, trials=trials)
+best_params = fmin(objective, space, algo=tpe.suggest, max_evals=100, trials=trials)
 best_params['n_d'] = int(best_params['n_d'])
 best_params['n_a'] = int(best_params['n_a'])
 best_params['n_steps'] = int(best_params['n_steps'])
