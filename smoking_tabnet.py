@@ -11,9 +11,7 @@ from sklearn.metrics import make_scorer, mean_squared_error, accuracy_score, roc
 from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
-from tqdm import tqdm
 
-from gain import gain
 import tensorflow.compat.v1 as tf
 
 from utils import normalization, sample_batch_index, uniform_sampler, binary_sampler, rounding, renormalization, \
