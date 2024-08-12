@@ -170,6 +170,10 @@ class CustomImputer(BaseEstimator, TransformerMixin):
             return X_train_imputed
         else:
             X_test_imputed = impute_test_data(self.sess, self.G_sample, self.Q, self.M, self.norm_parameters, X_copy)
+            if str(X_test_imputed['GENDER_SRC_DESC'][0]) == 'nan':
+                while str(X_test_imputed[0][0]) == 'nan':
+                    X_test_imputed = impute_test_data(self.sess, self.G_sample, self.Q, self.M, self.norm_parameters, X_copy)
+            # print(X_test_imputed['GENDER_SRC_DESC'][0])
             return X_test_imputed
 
 
